@@ -26,7 +26,7 @@ class BananahubRequest extends FormRequest
             'last_name'            =>'required | regex:/^[a-zA-Z]/ ',
             'email'                =>'required | email',
             'type_of_banana_Chips' =>'required',
-            'mobile_number'        =>'required |integer|min:10',
+            'mobile_number'        =>'required |integer|min_digits:10|max_digits:10',
             'date'                 =>'required |date',
             'pincode'              =>'required |integer',
             'price'                =>'required |integer',

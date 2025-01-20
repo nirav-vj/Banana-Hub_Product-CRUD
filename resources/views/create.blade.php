@@ -212,11 +212,11 @@
                                     {{ $message }}
                                 @enderror
                             </span><br>
-                            <input type="text" name="mobile_number" maxlength="10"
+                            <input type="text" name="mobile_number" maxlength="10" minvalue='10'
                                 style="width: 250px; height: 25px;border-radius: 5px; border: 2px solid #018C43;">
                         </div>
                         <div>
-                            <label for="name"> Date : </label><span style="color: r#018c43ed;margin-left: 10px">
+                            <label for="name"> Date : </label><span style="color: #018c43;margin-left: 10px">
                                 @error('date')
                                     {{ $message }}
                                 @enderror
