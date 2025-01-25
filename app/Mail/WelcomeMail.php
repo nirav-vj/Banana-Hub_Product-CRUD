@@ -1,15 +1,19 @@
 <?php
+
 namespace App\Mail;
+
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+
 class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
+
     public $welcomemessage;
+
     /**
      * Create a new message instance.
      */
@@ -17,6 +21,7 @@ class WelcomeMail extends Mailable
     {
         $this->$welcomemessage = $welcomemessage;
     }
+
     /**
      * Get the message envelope.
      */
@@ -26,6 +31,7 @@ class WelcomeMail extends Mailable
             subject: 'Welcome To Banana-Hub App',
         );
     }
+
     /**
      * Get the message content definition.
      */
@@ -35,6 +41,7 @@ class WelcomeMail extends Mailable
             view: 'email',
         );
     }
+
     /**
      * Get the attachments for the message.
      *

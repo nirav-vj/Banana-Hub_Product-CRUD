@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
-                ->name('register');
+        ->name('register');
 
     Route::post('registerstore', [RegisteredUserController::class, 'store']);
 
     Route::get('login', [AuthenticatedSessionController::class, 'login'])
-                ->name('login');
+        ->name('login');
 
     Route::post('logincheck', [AuthenticatedSessionController::class, 'logincheck']);
 
@@ -54,6 +54,6 @@ Route::middleware('guest')->group(function () {
 
 //     Route::put('password', [PasswordController::class, 'update'])->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout');
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    ->name('logout');
 // });
