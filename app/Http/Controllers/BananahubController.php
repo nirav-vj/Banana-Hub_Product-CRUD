@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Userproduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
+use Razorpay\Api\Api;
 
 class BananahubController extends Controller
 {
@@ -60,6 +62,21 @@ class BananahubController extends Controller
         $number = User::where('id', Auth::id())->with('product')->orderby('name')->first();
 
         return view('product', ['data' => $bananahub], compact('number'));
+    }
+
+    public function payment(Request $request)
+    {
+        $amount = $request->input('amount');
+        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+        $orderData = [
+            'receipt' => 'order_' . rand(1000, 9999),
+            'amount'  => $amount * 100,
+            'currency' => 'INR',
+            'payment_capture' => 1
+        ];
+
+        $order = $api->order->create($orderData);
+        return view('payment', ['orderId' => $order["id"], 'amount' => $amount * 100]);
     }
 
     public function AddToCart($id)

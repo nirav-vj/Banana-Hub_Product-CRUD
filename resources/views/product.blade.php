@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
             font-family: Arial, sans-serif;
             position: relative;
         }
+
         .container {
             display: flex;
             align-items: center;
@@ -29,6 +31,7 @@
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
             {{--  background-color: rgba(255, 255, 255, 0.85);  --}}
         }
+
         .cart {
             position: absolute;
             top: 7%;
@@ -42,42 +45,50 @@
             align-items: center;
             font-size: 30px;
         }
+
         .image-container {
             flex: 1;
             height: 93%;
             display: flex;
             justify-content: center;
         }
+
         .image-container img {
             max-width: 95%;
             height: auto;
             border-radius: 50px;
         }
+
         #images:hover {
             transition: transform 0.9s;
             transform: scale(1.05);
         }
+
         .sub-img:hover {
             transition: transform 0.9s;
             transform: scale(1.1);
         }
+
         .text-container {
             flex: 1;
             padding: 20px;
             text-align: left;
         }
+
         .text-container h1 {
             color: #018C43;
             font: italic small-caps bold 35px/1.2 Georgia, serif;
             margin-bottom: 20px;
             text-align: center;
         }
+
         .text-container .price {
             color: black;
             font: italic small-caps bold 35px/1.2 Georgia, serif;
             margin-bottom: 20px;
             text-align: center;
         }
+
         .text-container .add-to-cart,
         .text-container .buy {
             background-color: #018C43;
@@ -92,35 +103,44 @@
             margin-left: auto;
             margin-right: auto;
         }
+
         .text-container .quantity {}
+
         .text-container .buy {
             background-color: #018C43;
         }
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
                 height: auto;
             }
+
             .text-container {
                 text-align: center;
             }
+
             .image-container img {
                 max-width: 80%;
                 margin-bottom: 10px;
             }
         }
+
         @media (max-width: 480px) {
             .text-container h1 {
                 font-size: 24px;
             }
+
             .text-container .price {
                 font-size: 24px;
             }
+
             .text-container .add-to-cart,
             .text-container .buy {
                 width: 100%;
                 height: 50px;
             }
+
             .cart {
                 top: 10px;
                 right: 10px;
@@ -128,6 +148,7 @@
         }
     </style>
 </head>
+
 <body>
     <div>
         <a href="/home/cart" class="cart"><span style="position: relative;top:10px;left: 8.5px"><i
@@ -154,11 +175,19 @@
 
         <div class="text-container">
             <h1>{{ $data->type_of_banana_Chips }}</h1>
+
             <p style="text-align: center;"><span style="border-bottom:1px solid black;">(BANANHUB)</span></p>
+
             <h5 class="price">₹ {{ $data->price }}</h5><br>
-            <a href="/home/add-to-cart/product/{{ $data->id }}" style="text-decoration: none"><button class="add-to-cart">ADD-TO-CART</button></a>
-            <button class="buy">BUY</button><br><br>
+
+            <a href="/home/add-to-cart/product/{{ $data->id }}" style="text-decoration: none"><button
+                    class="add-to-cart">ADD-TO-CART</button></a>
+
+            <a href="/product/payment/{{ $data->id }}" style="text-decoration: none"><button
+                    class="buy">BUY</button></a><br><br>
+
             <p style="text-align: center;">Multiple secure payment options available</p>
+
             <div style="display: flex;gap:10px;flex-wrap: wrap;justify-content: center;height: 50px;">
                 <img class="sub-img"
                     style="height: 50px;border: 3px solid rgba(0, 153, 255, 0.267);border-radius: 17px;object-fit: cover;"
@@ -180,4 +209,5 @@
         </div>
     </div>
 </body>
+
 </html>

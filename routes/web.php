@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/add-to-cart/product/{id}', [BananahubController::class, 'AddToCart']);
         Route::get('/cart', [BananahubController::class, 'cart']);
         Route::get('/add-to-cart/delete/{id}', [BananahubController::class, 'AddToCartDelete']);
+        Route::post('/product/payment/{id}', [BananahubController::class, 'payment']);
     });
 
     // password
@@ -36,7 +37,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/checkout', [AuthenticatedSessionController::class, 'destroy']);
-
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
