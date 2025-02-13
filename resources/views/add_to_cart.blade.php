@@ -140,7 +140,7 @@
                     </div>
                     <br>
                     <div style="display: flex; gap: 5px; justify-content: center; padding: 0; margin-right: 23px;">
-                        <a><button>BUY IT NOW</button></a>
+                        <a href="{{ route('payment', ['amount' => $product->price]) }}"><button>BUY IT NOW</button></a>
                         <a href="{{ url('/home/add-to-cart/delete/') }}/{{ $product->id }}"><button>REMOVE</button></a>
                     </div>
                     @php $totalPrice += $product->price; @endphp

@@ -17,7 +17,7 @@
             "key": "{{ env('RAZORPAY_KEY') }}", 
             "amount": "{{ $amount }}",
             "currency": "INR",
-            "name": "Hello Corp",
+            "name": "Demo Corp",
             "description": "Test Transaction",
             "handler":function(response){
                 var payid = response.razorpay_payment_id;

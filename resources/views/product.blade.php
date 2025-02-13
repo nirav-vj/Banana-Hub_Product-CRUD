@@ -183,7 +183,7 @@
             <a href="/home/add-to-cart/product/{{ $data->id }}" style="text-decoration: none"><button
                     class="add-to-cart">ADD-TO-CART</button></a>
 
-            <a href="/product/payment/{{ $data->id }}" style="text-decoration: none"><button
+            <a href="{{ route('payment', ['amount' => $data->price]) }}" style="text-decoration: none"><button
                     class="buy">BUY</button></a><br><br>
 
             <p style="text-align: center;">Multiple secure payment options available</p>

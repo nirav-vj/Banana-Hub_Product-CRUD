@@ -16,6 +16,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [UserController::class, 'home']);
     Route::post('/search', [UserController::class, 'search']);
 
+    
     // home
     Route::post('/create', [BananahubController::class, 'create']);
     Route::group(['prefix' => 'home'], function () {
@@ -27,15 +28,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/add-to-cart/product/{id}', [BananahubController::class, 'AddToCart']);
         Route::get('/cart', [BananahubController::class, 'cart']);
         Route::get('/add-to-cart/delete/{id}', [BananahubController::class, 'AddToCartDelete']);
-        Route::post('/product/payment/{id}', [BananahubController::class, 'payment']);
     });
 
+    Route::get('/payment', [BananahubController::class, 'payment'])->name('payment');
+  
     // password
     Route::group(['prefix' => 'password'], function () {
         Route::get('/', [UserController::class, 'password']);
         Route::post('/update', [UserController::class, 'password_update']);
     });
-
+    
     Route::get('/checkout', [AuthenticatedSessionController::class, 'destroy']);
 });
 
