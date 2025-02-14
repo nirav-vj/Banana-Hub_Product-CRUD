@@ -82,7 +82,7 @@ class UserController extends Controller
                 ->orWhere('price', 'LIKE', "%$search%")
                 ->get();
         } else {
-            $bananahub = Bananahub::all();
+            $bananahubs = Bananahub::all();
         }
 
         return view('home', compact('bananahubs'));
