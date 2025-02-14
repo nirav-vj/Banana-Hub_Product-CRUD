@@ -10,12 +10,14 @@ Route::get('/', function () {
 });
 Route::middleware('auth')->group(function () {
 
+    //user
     Route::get('/create', [UserController::class, 'create']);
     Route::get('/user', [UserController::class, 'user']);
     Route::post('/user/picture', [UserController::class, 'user_picture']);
     Route::get('/home', [UserController::class, 'home']);
     Route::post('/search', [UserController::class, 'search']);
-
+    
+    Route::get('/checkout', [AuthenticatedSessionController::class, 'destroy']);
     
     // home
     Route::post('/create', [BananahubController::class, 'create']);
@@ -30,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/add-to-cart/delete/{id}', [BananahubController::class, 'AddToCartDelete']);
     });
 
+    //payment
     Route::get('/payment', [BananahubController::class, 'payment'])->name('payment');
   
     // password
@@ -38,7 +41,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/update', [UserController::class, 'password_update']);
     });
     
-    Route::get('/checkout', [AuthenticatedSessionController::class, 'destroy']);
 });
 
 require __DIR__ . '/auth.php';

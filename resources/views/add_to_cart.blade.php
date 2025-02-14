@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +11,13 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(120deg, #7eccfd, #ff9292);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
         }
+
         .cart-container {
             width: 80%;
             max-width: 1000px;
@@ -25,6 +26,7 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 1);
             text-align: center;
         }
+
         .cart-item {
             display: flex;
             flex-direction: column;
@@ -32,6 +34,7 @@
             margin-bottom: 40px;
             margin-top: 15px;
         }
+
         .cart-item img {
             width: 480px;
             height: auto;
@@ -39,30 +42,36 @@
             margin-bottom: 20px;
             transition: transform 0.6s;
         }
+
         .cart-item img:hover {
             transform: scale(1.05);
         }
+
         .cart-item h1 {
             color: #018C43;
             font: italic small-caps bold 32px Georgia, serif;
             margin-bottom: 10px;
             text-align: center;
         }
+
         .cart-item h2 {
             font-size: 24px;
             margin-bottom: 15px;
             color: #333;
         }
+
         .cart-item h2 span {
             color: #00A526;
             font-weight: bold;
         }
+
         .total-price {
             margin-top: 30px;
             font-size: 28px;
             font-weight: bold;
             color: #018C43;
         }
+
         .cancel {
             font-size: 17px;
             font-weight: bold;
@@ -70,6 +79,7 @@
             background-color: #FFFFFF;
             border: 3px solid #018C43;
         }
+
         button {
             background-color: #018C43;
             color: white;
@@ -78,27 +88,33 @@
             padding: 10px 20px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s ease-in-out;
         }
+
         button:hover {
             color: black;
         }
+
         @media (max-width: 768px) {
             .cart-container {
                 padding: 20px;
             }
+
             .cart-item img {
                 width: 220px;
             }
+
             .cart-item h1 {
                 font-size: 24px;
             }
+
             .cart-item h2 {
                 font-size: 20px;
             }
+
             .total-price {
                 font-size: 24px;
             }
+
             button {
                 font-size: 14px;
                 padding: 8px 16px;
@@ -106,9 +122,11 @@
         }
     </style>
 </head>
+
 <body>
     <div class="cart-container">
         @php $totalPrice = 0; @endphp
+
         @foreach ($carts as $cart)
             <div>
                 @if ($cart->product->count() == 0)
@@ -118,16 +136,24 @@
                     </a>
                 @endif
             </div>
+
             <div style="font-size: 20px;">
                 @if ($cart->product->count() == 0)
                     <h1>Your Cart Is Currently Empty.</h1>
+                    <a href="{{ url('/home') }}">
+                        <button class="cancel"
+                            style="width: 40%; text-align: center; justify-content: center; margin-top: 10px;">CONTINUE SHOPPING
+                        </button>
+                    </a>
                 @endif
             </div>
+
             @foreach ($cart->product as $key => $product)
                 <div class="cart-item">
                     <img src="{{ asset('images/' . $product->file) }}" alt="Product Image">
                     <h1>{{ $product->type_of_banana_Chips }}</h1>
-                    <h2>Price: ₹<span id="show-total-product-price-{{ $key }}">{{ $product->price }}</span></h2>
+                    <h2>Price: ₹<span id="show-total-product-price-{{ $key }}">{{ $product->price }}</span>
+                    </h2>
                     <input type="hidden" class="product-price-class" data-base-price="{{ $product->price }}"
                         value="{{ $product->price }}" id="product-total-price-{{ $key }}">
                     <div class="quantity">
@@ -140,8 +166,13 @@
                     </div>
                     <br>
                     <div style="display: flex; gap: 5px; justify-content: center; padding: 0; margin-right: 23px;">
-                        <a href="{{ route('payment', ['amount' => $product->price]) }}"><button>BUY IT NOW</button></a>
-                        <a href="{{ url('/home/add-to-cart/delete/') }}/{{ $product->id }}"><button>REMOVE</button></a>
+
+                        <a id="buy-now-{{ $key }}"
+                            href="{{ route('payment', ['amount' => $product->price]) }}">
+                            <button>BUY IT NOW</button>
+                        </a>
+                        <a
+                            href="{{ url('/home/add-to-cart/delete/') }}/{{ $product->id }}"><button>REMOVE</button></a>
                     </div>
                     @php $totalPrice += $product->price; @endphp
                 </div>
@@ -150,7 +181,9 @@
         @if (isset($product->id))
             <div class="total-price">
                 <h2>Total Price: ₹<span id="total-product-price">{{ $totalPrice }}</span></h2>
-                <button style="width: 40%; height: 50px;">BUY</button><br>
+                <a id="buy" href="{{ route('payment', ['amount' => $totalPrice]) }}">
+                    <button style="width: 40%; height: 50px;">BUY</button>
+                </a><br>
             </div>
         @endif
         <div>
@@ -170,11 +203,13 @@
             const productPriceDisplay = document.getElementById(`show-total-product-price-${key}`);
             const totalProductPrice = document.getElementById(`total-product-price`);
             const allProductPrices = document.querySelectorAll(".product-price-class");
+            const buyNowButton = document.getElementById(`buy-now-${key}`);
 
             let quantity = parseInt(quantityInput.value) + change;
             if (quantity < 1) quantity = 1;
             quantityInput.value = quantity;
-            
+
+
             const basePrice = parseInt(productPriceInput.getAttribute("data-base-price"));
             const updatedPrice = basePrice * quantity;
             productPriceInput.value = updatedPrice;
@@ -184,7 +219,12 @@
                 totalPrice += parseInt(priceInput.value);
             });
             totalProductPrice.textContent = totalPrice;
+
+            buyNowButton.href = `{{ route('payment') }}?amount=${updatedPrice}`;
+            buy.href = `{{ route('payment') }}?amount=${totalPrice}`;
+
         }
     </script>
 </body>
+
 </html>

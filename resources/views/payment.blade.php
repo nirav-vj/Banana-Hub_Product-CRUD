@@ -19,13 +19,13 @@
             "currency": "INR",
             "name": "Demo Corp",
             "description": "Test Transaction",
+            "callback_url":"http://127.0.0.1:8000/home",
             "handler":function(response){
                 var payid = response.razorpay_payment_id;
                 alert('Payment Success : ' + payid); 
             },
             "image": "https://example.com/your_logo",
             "order_id": "{{ $orderId }}",
-            "callback_url": "https://eneqd3r9zrjok.x.pipedream.net/",
             "prefill": { 
                 "name": "Nirav Vaja", 
                 "email": "nirav.vaja@example.com",

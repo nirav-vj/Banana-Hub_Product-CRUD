@@ -169,12 +169,12 @@
                 <div>
                     <h2 style="color: rgb(97, 97, 97)">₹ {{ $bananahub->price }}</h2>
                 </div>
-                <div style="display: flex;justify-content: center;gap: 15px">
+                {{--  <div style="display: flex;justify-content: center;gap: 15px">
                     <a href="{{ url('/home/edit/') }}/{{ $bananahub->id }}"><button
                             class="buy-button">EDIT</button></a>
                     <a href="{{ url('/home/delete') }}/{{ $bananahub->id }}"><button
                             class="buy-button">DELETE</button></a>
-                </div>
+                </div>  --}}
                 <div>
                     <a href="{{ url('/home/product') }}/{{ $bananahub->id }}"><button
                             class="add-to-cart">BUY</button></a>

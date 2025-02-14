@@ -72,15 +72,15 @@ class BananahubController extends Controller
             'receipt' => 'order_' . rand(1000, 9999),
             'amount'  => $amount * 100,
             'currency' => 'INR',
-            'payment_capture' => 1
         ];
-
         $order = $api->order->create($orderData);
+        
         return view('payment', [
             'orderId' => $order["id"],
-            'amount' => $amount * 100
-        ]);
+            'amount' => $amount * 100,
+            ]);
     }
+
 
     public function AddToCart($id)
     {
