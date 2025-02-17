@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BananahubRequest;
-use App\Models\Bananahub;
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\User;
 use App\Models\Userproduct;
 use Illuminate\Support\Facades\Auth;
@@ -11,19 +12,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Request;
 use Razorpay\Api\Api;
 
-class BananahubController extends Controller
+class ProductController extends Controller
 {
     public function homeindex()
     {
-        $bananahubs = Bananahub::all();
-
-        return view('home', compact('bananahubs'));
+        $products = Product::all();
+        return view('home', compact('products'));
     }
 
     public function create(BananahubRequest $request)
     {
 
-        $bananahub = new Bananahub;
+        $bananahub = new Product;
         $bananahub->first_name = $request['first_name'];
         $bananahub->last_name = $request['last_name'];
         $bananahub->email = $request['email'];
@@ -50,7 +50,7 @@ class BananahubController extends Controller
 
     public function edit($id)
     {
-        $bananahub = Bananahub::find($id);
+        $bananahub = Product::find($id);
         $bananahub->accessories = explode(',', $bananahub->accessories);
 
         return view('edit', ['data' => $bananahub]);
@@ -58,34 +58,66 @@ class BananahubController extends Controller
 
     public function product($id)
     {
-        $bananahub = Bananahub::find($id);
+        $bananahub = Product::find($id);
         $number = User::where('id', Auth::id())->with('product')->orderby('name')->first();
 
         return view('product', ['data' => $bananahub], compact('number'));
     }
 
-    public function payment(Request $request)
+    public function createOrder(Request $request)
     {
-        $amount = Request::input('amount');
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+
+        $product = Product::findOrFail($validatedData['product_id']);
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
+
         $orderData = [
-            'receipt' => 'order_' . rand(1000, 9999),
-            'amount'  => $amount * 100,
-            'currency' => 'INR',
+            'receipt'   => uniqid(),
+            'amount'    => $product->price * 100, 
+            'currency'  => 'INR',
+            'payment_capture' => 1
         ];
-        $order = $api->order->create($orderData);
-        
-        return view('payment', [
-            'orderId' => $order["id"],
-            'amount' => $amount * 100,
-            ]);
+
+        $razorpayOrder = $api->order->create($orderData);
+
+        return response()->json([
+            'order_id' => $razorpayOrder['id'],
+            'amount' => $product->price * 100,
+            'currency' => 'INR',
+            'key' => env('RAZORPAY_KEY')
+        ]);
+    }
+
+
+    public function storePayment(Request $request)
+    {
+
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'razorpay_payment_id' => 'required'
+        ]);
+
+        $product = Product::findOrFail($request->product_id);
+        $user = Auth::user();
+
+        Order::create([
+            'user_id' => $user->id,
+            'product_id' => $product->id,
+            'product_name' => $product->name,
+            'product_price' => $product->price,
+            'payment_id' => $request->razorpay_payment_id
+        ]);
+
+        return response()->json(['message' => 'Payment successful, Order placed']);
     }
 
 
     public function AddToCart($id)
     {
         $user = Auth::user();
-        $product = Bananahub::find($id);
+        $product = Product::find($id);
         $product->users()->attach($user->id);
 
         return redirect()->back();
@@ -114,7 +146,7 @@ class BananahubController extends Controller
      */
     public function update(BananahubRequest $request, $id)
     {
-        $bananahub = Bananahub::find($id);
+        $bananahub = Product::find($id);
         $bananahub->first_name = $request['first_name'];
         $bananahub->last_name = $request['last_name'];
         $bananahub->email = $request['email'];
@@ -140,7 +172,7 @@ class BananahubController extends Controller
 
     public function delete($id)
     {
-        $bananahub = Bananahub::find($id);
+        $bananahub = Product::find($id);
         $filePath = public_path('images').'/'.$bananahub->file;
 
         if (File::exists($filePath)) {

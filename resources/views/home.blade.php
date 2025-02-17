@@ -156,27 +156,27 @@
     <div class="image-group snacks-product-card"
         style="display:grid;grid-template-columns: auto auto auto auto ;gap: 10px; text-align: center">
 
-        @foreach ($bananahubs as $bananahub)
+        @foreach ($products as $product)
             <div style="text-align: center ;">
                 <div>
-                    <a href="{{ url('/home/product') }}/{{ $bananahub->id }}">
+                    <a href="{{ url('/home/product') }}/{{ $product->id }}">
                         <img id="image"
-                            class="image"src={{ asset('images/' . $bananahub->file) }} alt="image not found"></a>
+                            class="image"src={{ asset('images/' . $product->file) }} alt="image not found"></a>
                 </div>
                 <div>
-                    <h2>{{ $bananahub->type_of_banana_Chips }} </h2>
+                    <h2>{{ $product->type_of_banana_Chips }} </h2>
                 </div>
                 <div>
-                    <h2 style="color: rgb(97, 97, 97)">₹ {{ $bananahub->price }}</h2>
+                    <h2 style="color: rgb(97, 97, 97)">₹ {{ $product->price }}</h2>
                 </div>
-                {{--  <div style="display: flex;justify-content: center;gap: 15px">
-                    <a href="{{ url('/home/edit/') }}/{{ $bananahub->id }}"><button
+                <div style="display: flex;justify-content: center;gap: 15px">
+                    <a href="{{ url('/home/edit/') }}/{{ $product->id }}"><button
                             class="buy-button">EDIT</button></a>
-                    <a href="{{ url('/home/delete') }}/{{ $bananahub->id }}"><button
+                    <a href="{{ url('/home/delete') }}/{{ $product->id }}"><button
                             class="buy-button">DELETE</button></a>
-                </div>  --}}
+                </div>
                 <div>
-                    <a href="{{ url('/home/product') }}/{{ $bananahub->id }}"><button
+                    <a href="{{ url('/home/product') }}/{{ $product->id }}"><button
                             class="add-to-cart">BUY</button></a>
 
                 </div>

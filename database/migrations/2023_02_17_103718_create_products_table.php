@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('banana_hub', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('type_of_banana_Chips');
             $table->string('file');
-            $table->integer('mobile_number')->unique();
+            $table->bigInteger('mobile_number')->unique();
             $table->date('date');
             $table->integer('pincode')->nullable();
             $table->integer('price');
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('banana_hub');
+        Schema::dropIfExists('products');
     }
 };

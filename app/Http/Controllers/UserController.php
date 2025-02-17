@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bananahub;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,9 +13,9 @@ class UserController extends Controller
 {
     public function home()
     {
-        $bananahubs = Bananahub::all();
+        $products = Product::all();
 
-        return view('home', compact('bananahubs'));
+        return view('home', compact('products'));
     }
 
     public function user()
@@ -78,11 +79,11 @@ class UserController extends Controller
     {
         $search = $request->search;
         if ($search != '') {
-            $bananahubs = Bananahub::where('type_of_banana_Chips', 'LIKE', "%$search%")
+            $bananahubs = Product::where('type_of_banana_Chips', 'LIKE', "%$search%")
                 ->orWhere('price', 'LIKE', "%$search%")
                 ->get();
         } else {
-            $bananahubs = Bananahub::all();
+            $bananahubs = Product::all();
         }
 
         return view('home', compact('bananahubs'));

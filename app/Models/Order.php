@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Razorpay\Api\Product;
 
-class Purchase extends Model
+class Order extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'product_id', 'product_name', 'product_price', 'payment_id'];
+    protected $fillable = [
+     'user_id',
+     'product_id',
+     'product_name',
+     'product_price',
+     'payment_id'
+    ];
 
     public function user()
     {

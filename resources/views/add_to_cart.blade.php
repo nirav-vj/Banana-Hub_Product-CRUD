@@ -168,7 +168,7 @@
                     <div style="display: flex; gap: 5px; justify-content: center; padding: 0; margin-right: 23px;">
 
                         <a id="buy-now-{{ $key }}"
-                            href="{{ route('payment', ['amount' => $product->price]) }}">
+                            href="{{ route('storepayment', ['amount' => $product->price]) }}">
                             <button>BUY IT NOW</button>
                         </a>
                         <a
@@ -181,7 +181,7 @@
         @if (isset($product->id))
             <div class="total-price">
                 <h2>Total Price: ₹<span id="total-product-price">{{ $totalPrice }}</span></h2>
-                <a id="buy" href="{{ route('payment', ['amount' => $totalPrice]) }}">
+                <a id="buy" href="{{ route('storepayment', ['amount' => $totalPrice]) }}">
                     <button style="width: 40%; height: 50px;">BUY</button>
                 </a><br>
             </div>
@@ -220,8 +220,8 @@
             });
             totalProductPrice.textContent = totalPrice;
 
-            buyNowButton.href = `{{ route('payment') }}?amount=${updatedPrice}`;
-            buy.href = `{{ route('payment') }}?amount=${totalPrice}`;
+            buyNowButton.href = `{{ route('storepayment') }}?amount=${updatedPrice}`;
+            buy.href = `{{ route('storepayment') }}?amount=${totalPrice}`;
 
         }
     </script>

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\BananahubController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,20 +20,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [AuthenticatedSessionController::class, 'destroy']);
     
     // home
-    Route::post('/create', [BananahubController::class, 'create']);
+    Route::post('/create', [ProductController::class, 'create']);
     Route::group(['prefix' => 'home'], function () {
-        Route::get('/index', [BananahubController::class, 'homeindex']);
-        Route::get('/delete/{id}', [BananahubController::class, 'delete']);
-        Route::get('/edit/{id}', [BananahubController::class, 'edit']);
-        Route::post('/update/{id}', [BananahubController::class, 'update']);
-        Route::get('/product/{id}', [BananahubController::class, 'product']);
-        Route::get('/add-to-cart/product/{id}', [BananahubController::class, 'AddToCart']);
-        Route::get('/cart', [BananahubController::class, 'cart']);
-        Route::get('/add-to-cart/delete/{id}', [BananahubController::class, 'AddToCartDelete']);
+        Route::get('/index', [ProductController::class, 'homeindex']);
+        Route::get('/delete/{id}', [ProductController::class, 'delete']);
+        Route::get('/edit/{id}', [ProductController::class, 'edit']);
+        Route::post('/update/{id}', [ProductController::class, 'update']);
+        Route::get('/product/{id}', [ProductController::class, 'product']);
+        Route::get('/add-to-cart/product/{id}', [ProductController::class, 'AddToCart']);
+        Route::get('/cart', [ProductController::class, 'cart']);
+        Route::get('/add-to-cart/delete/{id}', [ProductController::class, 'AddToCartDelete']);
     });
 
     //payment
-    Route::get('/payment', [BananahubController::class, 'payment'])->name('payment');
+    Route::get('/store-payment', [ProductController::class, 'storePayment'])->name('storepayment');
+    Route::get('/create-order', [ProductController::class, 'createOrder'])->name('createorder');
   
     // password
     Route::group(['prefix' => 'password'], function () {

@@ -5,11 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Bananahub extends Model
+class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'banana_hub';
+    protected $table = 'products';
+
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'email',
+        'type_of_banana_Chips',
+        'file',
+        'mobile_number',
+        'date',
+        'pincode',
+        'price',
+        'address'
+    ];
 
     protected $primarykey = 'id';
 
