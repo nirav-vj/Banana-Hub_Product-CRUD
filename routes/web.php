@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     });
 
     //payment
-    Route::get('/store-payment', [ProductController::class, 'storePayment'])->name('storepayment');
+    Route::get('payment', [ProductController::class, 'Payment'])->name('payment');
     Route::get('/create-order', [ProductController::class, 'createOrder'])->name('createorder');
   
     // password

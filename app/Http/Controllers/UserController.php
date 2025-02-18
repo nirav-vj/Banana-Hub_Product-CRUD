@@ -79,14 +79,14 @@ class UserController extends Controller
     {
         $search = $request->search;
         if ($search != '') {
-            $bananahubs = Product::where('type_of_banana_Chips', 'LIKE', "%$search%")
+            $products = Product::where('type_of_banana_Chips', 'LIKE', "%$search%")
                 ->orWhere('price', 'LIKE', "%$search%")
                 ->get();
         } else {
-            $bananahubs = Product::all();
+            $products = Product::all();
         }
 
-        return view('home', compact('bananahubs'));
+        return view('home', compact('products'));
     }
 
     public function create()

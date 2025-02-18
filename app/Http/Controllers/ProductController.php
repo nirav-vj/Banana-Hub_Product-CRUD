@@ -9,7 +9,7 @@ use App\Models\User;
 use App\Models\Userproduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Razorpay\Api\Api;
 
 class ProductController extends Controller
@@ -64,29 +64,21 @@ class ProductController extends Controller
         return view('product', ['data' => $bananahub], compact('number'));
     }
 
-    public function createOrder(Request $request)
+     public function payment(Request $request)
     {
-        $validatedData = $request->validate([
-            'product_id' => 'required|exists:products,id',
-        ]);
-
-        $product = Product::findOrFail($validatedData['product_id']);
+        $amount = $request->input('amount');
         $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
-
         $orderData = [
-            'receipt'   => uniqid(),
-            'amount'    => $product->price * 100, 
-            'currency'  => 'INR',
+            'receipt' => 'order_' . rand(1000, 9999),
+            'amount'  => $amount * 100,
+            'currency' => 'INR',
             'payment_capture' => 1
         ];
 
-        $razorpayOrder = $api->order->create($orderData);
-
-        return response()->json([
-            'order_id' => $razorpayOrder['id'],
-            'amount' => $product->price * 100,
-            'currency' => 'INR',
-            'key' => env('RAZORPAY_KEY')
+        $order = $api->order->create($orderData);
+        return view('payment', [
+            'orderId' => $order["id"],
+            'amount' => $amount * 100
         ]);
     }
 
