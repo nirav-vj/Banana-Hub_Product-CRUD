@@ -33,15 +33,16 @@ Route::middleware('auth')->group(function () {
     });
 
     //payment
-    Route::get('payment', [ProductController::class, 'Payment'])->name('payment');
-    Route::get('/create-order', [ProductController::class, 'createOrder'])->name('createorder');
+    Route::get('/process-payment', [ProductController::class, 'Payment'])->name('process.payment');
+    Route::post('/store-payment', [ProductController::class, 'storePayment'])->name('store.payment');
+    
   
     // password
     Route::group(['prefix' => 'password'], function () {
         Route::get('/', [UserController::class, 'password']);
         Route::post('/update', [UserController::class, 'password_update']);
     });
-    
+        
 });
 
 require __DIR__ . '/auth.php';

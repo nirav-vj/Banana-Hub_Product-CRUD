@@ -128,21 +128,14 @@
         @php $totalPrice = 0; @endphp
 
         @foreach ($carts as $cart)
-            <div>
-                @if ($cart->product->count() == 0)
-                    <a href="{{ url('/home') }}">
-                        <button
-                            style="position: absolute; top:65px; background-color: #018C43; color: white; border:none; height:40px; width:80px; left:11%; border-radius: 10px; font-size: 16px;">BACK</button>
-                    </a>
-                @endif
-            </div>
+           
 
             <div style="font-size: 20px;">
                 @if ($cart->product->count() == 0)
                     <h1>Your Cart Is Currently Empty.</h1>
                     <a href="{{ url('/home') }}">
                         <button class="cancel"
-                            style="width: 40%; text-align: center; justify-content: center; margin-top: 10px;">CONTINUE SHOPPING
+                            style="width: 40%; text-align: center; justify-content: center; margin-top: 0px;">CONTINUE SHOPPING
                         </button>
                     </a>
                 @endif
@@ -150,7 +143,7 @@
 
             @foreach ($cart->product as $key => $product)
                 <div class="cart-item">
-                    <img src="{{ asset('storage/' . $product->file) }}" alt="Product Image">
+                    <img src="{{ asset('images/' . $product->file) }}" alt="Product Image">
                     <h1>{{ $product->type_of_banana_Chips }}</h1>
                     <h2>Price: ₹<span id="show-total-product-price-{{ $key }}">{{ $product->price }}</span>
                     </h2>
@@ -168,8 +161,8 @@
                     <div style="display: flex; gap: 5px; justify-content: center; padding: 0; margin-right: 23px;">
 
                         <a id="buy-now-{{ $key }}"
-                            href="{{ route('payment', ['amount' => $product->price]) }}">
-                            <button>BUY IT NOW</button>
+                            href="{{ route('process.payment', ['amount' => $product->price]) }}">
+                            <button id="rzp-button">BUY IT NOW</button>
                         </a>
                         <a
                             href="{{ url('/home/add-to-cart/delete/') }}/{{ $product->id }}"><button>REMOVE</button></a>
@@ -181,8 +174,8 @@
         @if (isset($product->id))
             <div class="total-price">
                 <h2>Total Price: ₹<span id="total-product-price">{{ $totalPrice }}</span></h2>
-                <a id="buy" href="{{ route('payment', ['amount' => $totalPrice]) }}">
-                    <button style="width: 40%; height: 50px;">BUY</button>
+                <a id="buy" href="{{ route('process.payment', ['amount' => $totalPrice]) }}">
+                    <button style="width: 40%; height: 50px; " id="rzp-button">BUY</button>
                 </a><br>
             </div>
         @endif
@@ -220,8 +213,8 @@
             });
             totalProductPrice.textContent = totalPrice;
 
-            buyNowButton.href = `{{ route('payment') }}?amount=${updatedPrice}`;
-            buy.href = `{{ route('payment') }}?amount=${totalPrice}`;
+            buyNowButton.href = `{{ route('process.payment') }}?amount=${updatedPrice}`;
+            buy.href = `{{ route('process.payment') }}?amount=${totalPrice}`;
 
         }
     </script>

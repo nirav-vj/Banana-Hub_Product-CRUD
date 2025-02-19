@@ -161,7 +161,7 @@
                 <div>
                     <a href="{{ url('/home/product') }}/{{ $product->id }}">
                         <img id="image"
-                            class="image"src={{ asset('storage/' . $product->file) }} alt="image not found"></a>
+                            class="image"src={{ asset('images/' . $product->file) }} alt="image not found"></a>
                 </div>
                 <div>
                     <h2>{{ $product->type_of_banana_Chips }} </h2>

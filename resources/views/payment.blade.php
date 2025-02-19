@@ -59,15 +59,18 @@
             "name": "Demo Corp",
             "description": "Test Transaction",
             "callback_url": "http://127.0.0.1:8000/home",
-            "handler": function(response) {
-                var payid = response.razorpay_payment_id;
-                var amountPaid = options.amount / 100;
-                {{--  var productName = "{{ $productName }}";
-                var productPrice = "{{ $productPrice }}";  --}}
-
-
-                generateReceipt(payid, amountPaid, "Razorpay Payment", "Nirav Vaja");
-            },
+            "handler": function (response) {
+            fetch("{{ route('store.payment') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": "{{ csrf_token() }}" },
+                body: JSON.stringify({
+                    product_id: "{{ request('product_id') }}",
+                    razorpay_payment_id: response.razorpay_payment_id
+                })
+            }).then(response => response.json())
+            .then(data => alert(data.message))
+            .catch(error => alert("Payment failed!"));
+        },
             "image": "https://example.com/your_logo",
             "order_id": "{{ $orderId }}",
             "prefill": {
@@ -86,26 +89,7 @@
         var rzp1 = new Razorpay(options);
         rzp1.open();
 
-        function generateReceipt(paymentId, amount, description, customerName) {
-
-            document.body.innerHTML += `  
-                <div class="receipt" id="receipt">  
-                    <h2>Payment Receipt</h2>  
-                    <div class="details"><strong>Customer Name:</strong> ${customerName}</div>  
-                    {{--  <div class="details"><strong>Purchased Product:</strong> ${productName} - ₹${productPrice}</div>  --}}
-                    <div class="details"><strong>Payment ID:</strong> ${paymentId}</div>  
-                    <div class="details"><strong>Description:</strong> ${description}</div>  
-                    <div class="details"><strong>Date & Time:</strong> ${new Date().toLocaleString('en-IN', { hour12: true })}</div>
-                    <div class="details"><strong>Status:</strong> Payment Successful</div>  
-                    <div style = "border-top: 3px solid;"></div>
-                    <div style = "display:flex;gap:65%;">
-                        <div class="details">  <strong>Amount Paid:</strong></div>
-                        <div style = "margin-top: 16px;">₹${amount.toFixed(2)}</div>
-                    </div>
-                </div>`;
-
-            document.getElementById('receipt').style.display = 'block';
-        }
+        
     </script>
 </body>
 

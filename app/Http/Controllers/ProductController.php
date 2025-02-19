@@ -10,6 +10,7 @@ use App\Models\Userproduct;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Razorpay\Api\Api;
 
 class ProductController extends Controller
@@ -78,7 +79,7 @@ class ProductController extends Controller
         $order = $api->order->create($orderData);
         return view('payment', [
             'orderId' => $order["id"],
-            'amount' => $amount * 100
+            'amount' => $amount * 100,
         ]);
     }
 
@@ -91,28 +92,43 @@ class ProductController extends Controller
             'razorpay_payment_id' => 'required'
         ]);
 
-        $product = Product::findOrFail($request->product_id);
-        $user = Auth::user();
+        $api = new Api(env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
 
-        Order::create([
-            'user_id' => $user->id,
-            'product_id' => $product->id,
-            'product_name' => $product->name,
-            'product_price' => $product->price,
-            'payment_id' => $request->razorpay_payment_id
-        ]);
+        try {
+            $payment = $api->payment->fetch($request->razorpay_payment_id);
 
-        return response()->json(['message' => 'Payment successful, Order placed']);
+            if ($payment->status == 'captured') {
+                $product = Product::findOrFail($request->product_id);
+                $user = Auth::user();
+
+                Order::create([
+                    'user_id' => $user->id,
+                    'product_id' => $product->id,
+                    'product_name' => $product->name,
+                    'product_price' => $product->price,
+                    'payment_id' => $request->razorpay_payment_id
+                ]);
+
+                return response()->json(['message' => 'Payment successful, Order placed']);
+            } else {
+                return response()->json(['message' => 'Payment failed or not captured'], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Payment verification failed', 'error' => $e->getMessage()], 400);
+        }
     }
 
 
     public function AddToCart($id)
     {
         $user = Auth::user();
-        $product = Product::find($id);
-        $product->users()->attach($user->id);
 
-        return redirect()->back();
+        DB::table('user_product')->updateOrInsert(
+            ['user_id' => $user->id, 'product_id' => $id],
+            ['quantity' => DB::raw('quantity + 1'), 'updated_at' => now()]
+        );
+
+        return back();
     }
 
     public function cart()
@@ -126,7 +142,7 @@ class ProductController extends Controller
     public function AddToCartDelete($id)
     {
 
-        $userproduct = Userproduct::where('user_id', Auth::id())->where('bananahub_id', $id)->first();
+        $userproduct = Userproduct::where('user_id', Auth::id())->where('product_id', $id)->first();
 
         $userproduct->delete();
 

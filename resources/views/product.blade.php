@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @csrf
     <title>Product</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image"
@@ -151,17 +152,29 @@
 
 <body>
     <div>
-        <a href="/home/cart" class="cart"><span style="position: relative;top:10px;left: 8.5px"><i
-                    class="fa-solid fa-cart-shopping"></i></span>
-            <span
-                style="position: absolute;margin-left: 6px;margin-top: -10px;
+    <a href="/home/cart" class="cart">
+        <span style="position: relative; top:10px; left: 8.5px">
+            <i class="fa-solid fa-cart-shopping"></i>
+        </span>
+
+        @if ($number->product->count() > 0)
+            <span style="position: absolute;
+                        margin-left: 6px;
+                        margin-top: -10px;
                         font-size: 20px;
                         background-color: red;
                         border-radius: 50px;
                         width: 25px;
                         text-align: center;
-                        height: 23px;">{{ $number->product->count() }}</span></a>
-    </div>
+                        height: 23px;
+                        color: white;">
+                {{ $number->product->count() }}
+            </span>
+        @endif
+    </a>
+</div>
+
+
     <div>
         <a href="{{ url('/home') }}"><button
                 style="position: absolute;top:65px;background-color: #018C43;color: white;
@@ -170,7 +183,7 @@
     </div>
     <div class="container">
         <div class="image-container" id="images">
-            <img src="{{ asset('storage/' . $data->file) }}" alt="Product Image">
+            <img src="{{ asset('images/' . $data->file) }}" alt="Product Image">
         </div>
 
         <div class="text-container">
@@ -183,7 +196,7 @@
             <a href="/home/add-to-cart/product/{{ $data->id }}" style="text-decoration: none"><button
                     class="add-to-cart">ADD-TO-CART</button></a>
 
-            <a href="{{ route('payment', ['amount' => $data->price]) }}" style="text-decoration: none"><button
+            <a href="{{ route('process.payment', ['amount' => $data->price]) }}" style="text-decoration: none"><button
                     class="buy">BUY</button></a><br><br>
 
             <p style="text-align: center;">Multiple secure payment options available</p>
