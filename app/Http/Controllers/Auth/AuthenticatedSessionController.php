@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
         try {
             $toemailaddress = $request->email;
             $welcomemail = 'Wlcome to Banana-Hub app';
-            $responce = Mail::to($toemailaddress)->send(new WelcomeMail($welcomemail));
+            $responce = Mail::to($toemailaddress)->queue(new WelcomeMail($welcomemail));
         } catch (Exception $e) {
             error('Unable to send mail'.$e->getMessage());
         }
