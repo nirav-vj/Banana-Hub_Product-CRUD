@@ -44,7 +44,7 @@
         }
 
         .cart-item img:hover {
-            transform: scale(1.05);
+            transform: scale(0.9);
         }
 
         .cart-item h1 {

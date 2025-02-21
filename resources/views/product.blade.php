@@ -61,8 +61,8 @@
         }
 
         #images:hover {
-            transition: transform 0.9s;
-            transform: scale(1.05);
+            transition: transform 0.5s;
+            transform: scale(0.95);
         }
 
         .sub-img:hover {
