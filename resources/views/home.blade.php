@@ -11,8 +11,6 @@
         href="https://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Google-Drive-Forms-icon.png">
     <title>Our Product</title>
     <style>
-
-
         .hader {
             text-align: center;
             display: flex;
@@ -69,7 +67,7 @@
         }
 
 
-        .add-to-cart {
+        .buy {
             background-color: #018C43;
             color: white;
             border: none;
@@ -77,6 +75,42 @@
             height: 30px;
             margin-top: 12px;
             border-radius: 5px
+        }
+
+        li.class1 {
+            display: inline-block;
+        }
+
+        .class3 {
+            display: none;
+            position: absolute;
+            background: linear-gradient(120deg, #acddfc, #fcb9b9);
+            border-radius: 5%;
+            justify-content: center;
+            text-align: center;
+            margin-left: -1%;
+        }
+
+
+         li a,.class2 {
+            display: inline-block;
+            color: rgb(7, 7, 7);
+        }
+        .class3 a {
+            color: rgb(5, 5, 5);
+            padding: 12px 16px;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            
+        }
+        .class3 a:hover {
+            background-color:rgba(252, 232, 232, 0.733);
+            border-radius: 5%;
+            justify-content: center;
+        }
+        .class1:hover .class3 {
+            display: block;
         }
 
         @media (max-width:1440px) {
@@ -109,8 +143,6 @@
                 margin-left: 100%;
             }
         }
-
-        
     </style>
 </head>
 
@@ -132,17 +164,28 @@
             <h1>PRODUCTS</h1>
         </div>
 
-        <div style="padding-right:100px ; display: flex ;gap: 30px;margin-left:50px" class="offcanvas offcanvas-end" id="demo">
+        <div style="padding-right:100px ; display: flex ;gap: 0px;margin-left:50px" class="offcanvas offcanvas-end"
+            id="demo">
             <a href="/create"
-                style="margin-top:3px;color: #018c43 ;border:2px dashed #018C43 ;height: 28px; font-size: 25px;width: 30px;"
+                style="margin-top:16.5%;color: #018c43 ;border:2px dashed #018C43 ;height: 28px; font-size: 25px;width: 30px;"
                 class="logo"><i class="fa-solid fa-plus" style="margin-left: 4px;"></i></a>
 
-            <a href="/user"
-                    style=" color:#018c43 ;border:2px solid #018C43 ; font-size: 25px;border-radius: 34px;width: 35px;text-align: center;height: 33px;"
-                    class="logo"><i class="fa-regular fa-user" style="margin-top: 2.5px; "
-                        class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo"></i>
-                </a>
+            <ol>
+                <li style="list-style-type: none;" class="class1">
+                        <a href="/home" class="class2"
+                            style=" color:#018c43 ;border:2px solid #018C43 ; font-size: 25px;border-radius: 34px;width: 35px;text-align: center;height: 33px;"
+                            class="logo"><i class="fa-regular fa-user" style="margin-top: 2.5px; "
+                                class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
+                                data-bs-target="#demo"></i>
+                        </a>
 
+                        <div class="class3">
+                            <a href="{{ url('/user') }}" target="_self">Profile</a>
+                            <a href="{{ url('/checkout') }}" target="_self">Logout</a>
+                        </div>
+
+                </li>
+            </ol>
 
         </div>
 
@@ -156,32 +199,34 @@
     <div class="image-group snacks-product-card"
         style="display:grid;grid-template-columns: auto auto auto auto ;gap: 10px; text-align: center">
 
-        @foreach ($products as $product)
-            <div style="text-align: center ;">
-                <div>
-                    <a href="{{ url('/home/product') }}/{{ $product->id }}">
-                        <img id="image"
-                            class="image"src={{ asset('images/' . $product->file) }} alt="image not found"></a>
-                </div>
-                <div>
-                    <h2>{{ $product->type_of_banana_Chips }} </h2>
-                </div>
-                <div>
-                    <h2 style="color: rgb(97, 97, 97)">₹ {{ $product->price }}</h2>
-                </div>
-                {{--  <div style="display: flex;justify-content: center;gap: 15px">
+        @isset($products)
+            @foreach ($products as $product)
+                <div style="text-align: center ;">
+                    <div>
+                        <a href="{{ url('/home/product') }}/{{ $product->id }}">
+                            <img id="image" class="image"src={{ asset('images/' . $product->file) }}
+                                alt="image not found"></a>
+                    </div>
+                    <div>
+                        <h2>{{ $product->type_of_banana_Chips }} </h2>
+                    </div>
+                    <div>
+                        <h2 style="color: rgb(97, 97, 97)">₹ {{ $product->price }}</h2>
+                    </div>
+                    {{--  <div style="display: flex;justify-content: center;gap: 15px">
                     <a href="{{ url('/home/edit/') }}/{{ $product->id }}"><button
                             class="buy-button">EDIT</button></a>
                     <a href="{{ url('/home/delete') }}/{{ $product->id }}"><button
                             class="buy-button">DELETE</button></a>
-                </div>  --}}
-                <div>
-                    <a href="{{ url('/home/product') }}/{{ $product->id }}"><button
-                            class="add-to-cart">BUY</button></a>
+                        </div>  --}}
+                    <div>
+                        <a href="{{ url('/home/product') }}/{{ $product->id }}"><button
+                                class="buy">BUY</button></a>
 
+                    </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        @endisset
     </div>
 </body>
 

@@ -12,14 +12,14 @@ class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $welcomemessage;
+    public $otp;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($welcomemessage)
+    public function __construct($otp)
     {
-        $this->$welcomemessage = $welcomemessage;
+        $this->otp = $otp;
     }
 
     /**
@@ -37,8 +37,10 @@ class WelcomeMail extends Mailable
      */
     public function content(): Content
     {
+
         return new Content(
-            view: 'email',
+            view: 'email_otp',
+            with: ['otp'=> $this->otp],
         );
     }
 

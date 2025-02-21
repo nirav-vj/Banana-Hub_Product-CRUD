@@ -177,7 +177,7 @@
 
     <div>
         <a href="{{ url('/home') }}"><button
-                style="position: absolute;top:65px;background-color: #018C43;color: white;
+                style="position: absolute;top:75px;background-color: #018C43;color: white;
                                                     border:none;height:40px;width:80px;left:11%;border-radius: 10px;
                                                     font-size: 16px;">BACK</button></a>
     </div>

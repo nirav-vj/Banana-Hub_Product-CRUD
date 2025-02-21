@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\BananahubRequest;
+use App\Http\Requests\ProductRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -21,29 +21,29 @@ class ProductController extends Controller
         return view('home', compact('products'));
     }
 
-    public function create(BananahubRequest $request)
+    public function create(ProductRequest $request)
     {
 
-        $bananahub = new Product;
-        $bananahub->first_name = $request['first_name'];
-        $bananahub->last_name = $request['last_name'];
-        $bananahub->email = $request['email'];
-        $bananahub->type_of_banana_Chips = $request['type_of_banana_Chips'];
+        $product = new Product;
+        $product->first_name = $request['first_name'];
+        $product->last_name = $request['last_name'];
+        $product->email = $request['email'];
+        $product->type_of_banana_Chips = $request['type_of_banana_Chips'];
 
         if ($request->has('file')) {
             $image = $request->file('file');
             $fileName = time().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('images'), $fileName);
-            $bananahub->file = $fileName;
+            $product->file = $fileName;
         }
 
-        $bananahub->mobile_number = $request['mobile_number'];
-        $bananahub->date = $request['date'];
+        $product->mobile_number = $request['mobile_number'];
+        $product->date = $request['date'];
 
-        $bananahub->pincode = $request['pincode'];
-        $bananahub->price = $request['price'];
-        $bananahub->address = $request['address'];
-        $bananahub->save();
+        $product->pincode = $request['pincode'];
+        $product->price = $request['price'];
+        $product->address = $request['address'];
+        $product->save();
 
         return redirect('home/index');
 
@@ -51,18 +51,18 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $bananahub = Product::find($id);
-        $bananahub->accessories = explode(',', $bananahub->accessories);
+        $product = Product::find($id);
+        $product->accessories = explode(',', $product->accessories);
 
-        return view('edit', ['data' => $bananahub]);
+        return view('edit', ['data' => $product]);
     }
 
     public function product($id)
     {
-        $bananahub = Product::find($id);
+        $product = Product::find($id);
         $number = User::where('id', Auth::id())->with('product')->orderby('name')->first();
 
-        return view('product', ['data' => $bananahub], compact('number'));
+        return view('product', ['data' => $product], compact('number'));
     }
 
      public function payment(Request $request)
@@ -152,13 +152,13 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(BananahubRequest $request, $id)
+    public function update(ProductRequest $request, $id)
     {
-        $bananahub = Product::find($id);
-        $bananahub->first_name = $request['first_name'];
-        $bananahub->last_name = $request['last_name'];
-        $bananahub->email = $request['email'];
-        $bananahub->type_of_banana_Chips = $request['type_of_banana_Chips'];
+        $product = Product::find($id);
+        $product->first_name = $request['first_name'];
+        $product->last_name = $request['last_name'];
+        $product->email = $request['email'];
+        $product->type_of_banana_Chips = $request['type_of_banana_Chips'];
 
         if ($request->has('file')) {
             $image = $request->file('file');
@@ -166,28 +166,28 @@ class ProductController extends Controller
             // Store the file in the public/images directory
             $image->move(public_path('images'), $fileName);
             // Save the file name or path to the database
-            $bananahub->file = $fileName;
+            $product->file = $fileName;
         }
-        $bananahub->mobile_number = $request['mobile_number'];
-        $bananahub->date = $request['date'];
-        $bananahub->pincode = $request['pincode'];
-        $bananahub->price = $request['price'];
-        $bananahub->address = $request['address'];
-        $bananahub->save();
+        $product->mobile_number = $request['mobile_number'];
+        $product->date = $request['date'];
+        $product->pincode = $request['pincode'];
+        $product->price = $request['price'];
+        $product->address = $request['address'];
+        $product->save();
 
         return redirect('home/index');
     }
 
     public function delete($id)
     {
-        $bananahub = Product::find($id);
-        $filePath = public_path('images').'/'.$bananahub->file;
+        $product = Product::find($id);
+        $filePath = public_path('images').'/'.$product->file;
 
         if (File::exists($filePath)) {
             unlink($filePath);
         }
 
-        $bananahub->delete();
+        $product->delete();
 
         return redirect()->back();
     }

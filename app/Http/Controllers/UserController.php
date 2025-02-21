@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bananahub;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -51,7 +50,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return 'Password Updated successfully!';
+        return redirect('/user');
 
     }
 
@@ -80,7 +79,7 @@ class UserController extends Controller
         $search = $request->search;
         if ($search != '') {
             $products = Product::where('type_of_banana_Chips', 'LIKE', "%$search%")
-                ->orWhere('price', 'LIKE', "%$search%")
+                // ->orWhere('price', 'LIKE', "%$search%")
                 ->get();
         } else {
             $products = Product::all();

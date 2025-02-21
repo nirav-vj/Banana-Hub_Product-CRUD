@@ -1,15 +1,29 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
-Route::middleware('auth')->group(function () {
 
+Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+
+Route::post('registerstore', [RegisteredUserController::class, 'store']);
+
+Route::get('verify/otp', [RegisteredUserController::class, 'verifyOtp'])->name('verify.otp');
+
+Route::post('verify/otp/store', [RegisteredUserController::class, 'verifyOtpStore'])->name('verify.otp.store');
+
+Route::get('login', [AuthenticatedSessionController::class, 'login'])->name('login');
+
+Route::post('logincheck', [AuthenticatedSessionController::class, 'logincheck']);
+
+Route::middleware('auth')->group(function () {
     //user
     Route::get('/create', [UserController::class, 'create']);
     Route::get('/user', [UserController::class, 'user']);
@@ -44,5 +58,7 @@ Route::middleware('auth')->group(function () {
     });
         
 });
+
+
 
 require __DIR__ . '/auth.php';

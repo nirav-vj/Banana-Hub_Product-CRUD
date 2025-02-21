@@ -83,7 +83,7 @@
             border: 2px dashed #018C43;
             height: 35px;
             border-radius: 3px;
-            margin-top: 40px;
+            margin-top: 20px;
             box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
         }
 
@@ -142,7 +142,6 @@
 
 
             <div>
-                <a href="/checkout"><button class="check-out" style="width: 154px;">CHECK OUT</button></a>
                 <a href="/password"><button class="check-out">CHANGE PASSWORD</button></a>
             </div>
 

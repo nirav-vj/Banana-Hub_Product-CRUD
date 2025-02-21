@@ -12,10 +12,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
 
-    Route::post('registerstore', [RegisteredUserController::class, 'store']);
+    // Route::post('registerstore', [RegisteredUserController::class, 'store']);
+
+    // Route::get('verify/otp',[RegisteredUserController::class,'verifyotp'])->name('verify.otp');
 
     Route::get('login', [AuthenticatedSessionController::class, 'login'])
         ->name('login');

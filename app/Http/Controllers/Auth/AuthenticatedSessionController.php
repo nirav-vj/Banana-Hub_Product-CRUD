@@ -4,15 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Mail\WelcomeMail;
-use Exception;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
-use function Laravel\Prompts\error;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -33,13 +29,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        try {
-            $toemailaddress = $request->email;
-            $welcomemail = 'Wlcome to Banana-Hub app';
-            $responce = Mail::to($toemailaddress)->queue(new WelcomeMail($welcomemail));
-        } catch (Exception $e) {
-            error('Unable to send mail'.$e->getMessage());
-        }
+        // try {
+        //     $toemailaddress = $request->email;
+        //     $welcomemail = 'Wlcome to Banana-Hub app';
+        //     $responce = Mail::to($toemailaddress)->queue(new WelcomeMail($welcomemail));
+        // } catch (Exception $e) {
+        //     error('Unable to send mail'.$e->getMessage());
+        // }
 
         return redirect('home');
     }
