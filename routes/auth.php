@@ -18,10 +18,9 @@ Route::middleware('guest')->group(function () {
 
     // Route::get('verify/otp',[RegisteredUserController::class,'verifyotp'])->name('verify.otp');
 
-    Route::get('login', [AuthenticatedSessionController::class, 'login'])
-        ->name('login');
+    // Route::get('login', [AuthenticatedSessionController::class, 'login'])->name('login');
 
-    Route::post('logincheck', [AuthenticatedSessionController::class, 'logincheck']);
+    // Route::post('logincheck', [AuthenticatedSessionController::class, 'logincheck']);
 
     // Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
     //             ->name('password.request');

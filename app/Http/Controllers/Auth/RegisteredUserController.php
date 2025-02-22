@@ -34,8 +34,11 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            // 'password' => ['required', 'confirmed',Password::defaults()],
-        ]);
+            'password' => ['required' , 'min:6'],
+        ],[
+            'email.unique' => 'This email is already exists.',
+            'password.min' => 'Password should be a minimum of 6 characters.',
+        ]); 
 
         $otp =  rand(100000, 999999);
         $user = EmailOtp::updateOrCreate(['email' => $request->email], [
@@ -45,7 +48,7 @@ class RegisteredUserController extends Controller
             'expired_at' => Carbon::now()->addMinute(5)
         ]);
 
-        $request->session()->put('register_name', $request->name);
+        $request->session()->put('register_name', $request->name);  
         $request->session()->put('register_email', $request->email);
         $request->session()->put('register_password', Hash::make($request->password));
 
@@ -78,7 +81,7 @@ class RegisteredUserController extends Controller
             ->first();
 
         if (!$emailOtp) {
-            return redirect()->back()->withInput()->with(['message' => 'Invalid OTP!']);
+            return redirect()->back()->withInput()->with(['error' => 'Enter a Valid OTP!']);
         }
 
         $user = User::create([

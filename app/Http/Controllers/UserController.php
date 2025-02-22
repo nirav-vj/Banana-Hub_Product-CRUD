@@ -35,22 +35,24 @@ class UserController extends Controller
 
         $request->validate([
             'password' => 'required',
-            'new_password' => 'required|min:6',
+            'new_password' => 'required|min:6|different:password',
             'password_confirmation' => 'required|min:6|same:new_password',
+        ],[
+            'password_confirmation.same' => 'New-Password and Password-Confirmation do not match.',
+            'new_password.different' => 'Current password and New Password should not be same.',
         ]);
 
         $userId = Auth::user()->id;
         $user = User::find($userId);
 
-        if (! Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Current password dose not match.',
-            ]);
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->with(
+                'message', 'Current password dose not match.');
         }
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return redirect('/user');
+        return redirect()->back()->with('success', 'Password updated successfully.');
 
     }
 

@@ -172,7 +172,7 @@
 
             <ol>
                 <li style="list-style-type: none;" class="class1">
-                        <a href="/home" class="class2"
+                        <a href="" class="class2"
                             style=" color:#018c43 ;border:2px solid #018C43 ; font-size: 25px;border-radius: 34px;width: 35px;text-align: center;height: 33px;"
                             class="logo"><i class="fa-regular fa-user" style="margin-top: 2.5px; "
                                 class="btn btn-primary" type="button" data-bs-toggle="offcanvas"

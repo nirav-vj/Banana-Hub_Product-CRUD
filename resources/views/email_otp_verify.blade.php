@@ -92,13 +92,13 @@
             @csrf
             <h3>Register </h3><br><br>
 
-            @if (session('error'))
-                <div style="color: red; text-align: center; margin-bottom: 15px;">
-                    {{ session('error') }}
-                </div>
-            @endif
-
+            
             <div class="input_box">
+                @if (session('error'))
+                    <div style="color: red; text-align: center; font-size:20px;">
+                        {{ session('error') }}
+                    </div>
+                @endif
                 <label for="otp">Enter Your OTP</label><br><br>
                 <input type="text" placeholder="Enter Your OTP" maxlength="6" name="otp" required>
             </div>
