@@ -92,13 +92,13 @@
             <h3>Login </h3><br><br>
 
             @foreach ($errors->all() as $error)
-                <h4 style="color: red; text-align: center; margin-bottom: 10px;">
+                <h4 style="color: red; text-align: center; margin-bottom: 25px;">
                     {{ $error }}
                 </h4>
             @endforeach
 
             @if ($errors->has('login'))
-                <div style="color: red; text-align: center; margin-bottom: 10px;">
+                <div style="color: red; text-align: center; margin-bottom: 25px;">
                     {{ $errors->first('login') }}
                 </div>
             @endif

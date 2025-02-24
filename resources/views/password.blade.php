@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> Ragister Form</title>
+    <title>Update Password</title>
     <link rel="icon" type="image"
         href="https://icons.iconarchive.com/icons/alecive/flatwoken/512/Apps-Google-Drive-Forms-icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -95,7 +95,7 @@
             <h3>Update Password</h3><br><br>
 
             @if ($errors->any())
-                <h4 style="color: red; text-align: center; margin-bottom: 15px;">
+                <h4 style="color: red; text-align: center; margin-bottom: 25px;">
                     @foreach ($errors->all() as $error)
                         <p>{{ $error }}</p>
                     @endforeach
@@ -103,13 +103,13 @@
             @endif
 
             @if (session('message'))
-                <h4 style="color: red; text-align: center; margin-bottom: 15px;">
+                <h4 style="color: red; text-align: center; margin-bottom: 25px;">
                     {{ session('message') }}
                 </h4>
             @endif
 
             @if (session('success'))
-                <h4 style="color: green; text-align: center; margin-bottom: 15px;">
+                <h4 style="color: green; text-align: center; margin-bottom: 25px;">
                     {{ session('success') }}
                     <meta http-equiv="refresh" content="5;url={{ url('/user') }}">
                 </h4>

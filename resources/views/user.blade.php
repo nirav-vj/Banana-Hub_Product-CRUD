@@ -26,7 +26,7 @@
         /* Profile Card Container */
         .profile-card {
             background: linear-gradient(130deg, #bfe2faa1, #f8dede00);
-            border: 30px solid #ffffffd7;
+            border: 30px inset #ffffffd7;
             border-radius: 115px;
             padding: 40px;
             text-align: center;

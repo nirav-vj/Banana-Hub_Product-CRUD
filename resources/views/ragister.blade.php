@@ -93,7 +93,7 @@
             <h3>Register </h3><br><br>
 
             @if ($errors->any())
-                <h4 style="color: red; text-align: center; margin-bottom: 15px;">
+                <h4 style="color: red; text-align: center; margin-bottom: 25px;">
                     @foreach ($errors->all() as $error)
                         <p>{{ $error }}</p>
                     @endforeach
