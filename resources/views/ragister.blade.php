@@ -115,7 +115,7 @@
                 <input type="password" name="password" id="password" placeholder="Enter Your Password ">
             </div><br>
             <button type="submit">GET OTP</button>
-            {{--  <p class="sign_up"> Don`t have an account? <a href="{{url('/home')}}">Sign up</a></p>  --}}
+            <p class="sign_up"> Don`t have an account? <a href="{{url('/home')}}">Sign up</a></p>
         </form>
     </div>
 </body>
